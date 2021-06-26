@@ -1,0 +1,20 @@
+#! /bin/bash
+set -eu
+
+# System
+arduino_dir=$HOME/Applications/arduino-1.8.9
+avr_dir=$arduino_dir/hardware/tools/avr
+
+# Arduino as an ISP
+port=/dev/ttyACM1
+baudrate=19200
+programmer=stk500v1
+
+# Try: 0xe0 / 0xdf / 0xff
+$avr_dir/bin/avrdude -C$avr_dir/etc/avrdude.conf -v -P$port -b$baudrate -c$programmer\
+ -pm328p\
+ -u\
+ -Uflash:w:build/girino.elf:a\
+ -Ulfuse:w:0xe2:m\
+ -Uhfuse:w:0xdd:m\
+ -Uefuse:w:0xff:m
