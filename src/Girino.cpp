@@ -32,7 +32,6 @@
 // Global Variables
 //-----------------------------------------------------------------------------
 
-volatile  boolean wait;
          uint16_t waitDuration;
 volatile uint16_t stopIndex;
 volatile uint16_t ADCCounter;
@@ -60,7 +59,6 @@ void setup (void) {		// Setup of the microcontroller
 	memset( (void *)ADCBuffer, 0, sizeof(ADCBuffer) );
 	memset( (void *)commandBuffer, 0, sizeof(commandBuffer) );
 	ADCCounter = 0;
-	wait = false;
 	waitDuration = ADCBUFFERSIZE - 32;
 	stopIndex = -1;
 	freeze = false;
@@ -107,7 +105,7 @@ void loop (void) {
 		//digitalWrite( errorPin, LOW );
 		cbi(PORTB,PORTB5);
 
-		wait = false;
+		stopIndex = ADCBUFFERSIZE + 1;
 		freeze = false;
 
 		// Clear buffer
@@ -221,12 +219,12 @@ void loop (void) {
 			case 't':			// 'w' for new threshold setting
 			case 'T': {
 				// Wait for COMMANDDELAY ms to be sure that the Serial buffer is filled
-				delay(COMMANDDELAY);
+				delay(COMMANDDELAY * 2);
 
 				fillBuffer( commandBuffer, COMBUFFERSIZE );
 
 				// Convert buffer to integer
-				uint8_t newT = atoi( commandBuffer );
+				uint16_t newT = atoi( commandBuffer );
 
 				// Display moving status indicator
 				Serial.print("Setting threshold to: ");
