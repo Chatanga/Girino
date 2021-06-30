@@ -19,4 +19,4 @@ I'm using an Arduino board as an ISP, but any other programmer will work, simply
 ```
 
 The firmware is uploaded directly into the MCU (an ATmega328P by the way), without bootloader.
-As such, it will reduces the initialization which could matter.
+As such, it will reduces the initialization time (which could matter).
