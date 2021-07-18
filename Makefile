@@ -4,8 +4,8 @@ ARDUINO_DIR = $(HOME)/Applications/arduino-1.8.9
 
 MKDIR_P ?= mkdir -p
 
-CORE=$(ARDUINO_DIR)/hardware/arduino/avr/cores/arduino
-VARIANT=$(ARDUINO_DIR)/hardware/arduino/avr/variants/standard
+CORE = $(ARDUINO_DIR)/hardware/arduino/avr/cores/arduino
+VARIANT = $(ARDUINO_DIR)/hardware/arduino/avr/variants/standard
 AVR_DIR = $(ARDUINO_DIR)/hardware/tools/avr
 
 CC = $(AVR_DIR)/bin/avr-gcc
@@ -29,7 +29,7 @@ BUILD_DIR = build
 SRC_DIR = src
 INC_DIRS += -I$(CORE) -I$(VARIANT) -I$(SRC_DIR)
 
-SRC = $(wildcard src/*.cpp) $(wildcard $(CORE)/*.c) $(wildcard $(CORE)/*.cpp)
+SRC = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(CORE)/*.c) $(wildcard $(CORE)/*.cpp)
 OBJ = $(SRC:%=$(BUILD_DIR)/%.o)
 DEP = $(SRC:%=$(BUILD_DIR)/%.d)
 
